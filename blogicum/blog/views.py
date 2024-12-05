@@ -1,6 +1,5 @@
 from django.shortcuts import render
 
-
 posts = [
     {
         'id': 0,
@@ -39,21 +38,27 @@ posts = [
     },
 ]
 
-
 def index(request):
     template = 'blog/index.html'
     context = {'posts_list': reversed(posts)}
     return render(request, template, context)
 
-
 def post_detail(request, id):
     template = 'blog/detail.html'
-    context = {
-        'post': posts[id],
-        'id': id,
-    }
+    # Убедитесь, что id является целым числом и находится в диапазоне списка posts
+    id = int(id)
+    if 0 <= id < len(posts):
+        context = {
+            'post': posts[id],
+            'id': id,
+        }
+    else:
+        # Обработка случая, когда id выходит за пределы диапазона
+        context = {
+            'post': None,
+            'id': id,
+        }
     return render(request, template, context)
-
 
 def category_posts(request, category_slug):
     template = 'blog/category.html'
