@@ -38,14 +38,15 @@ posts = [
     },
 ]
 
+
 def index(request):
     template = 'blog/index.html'
     context = {'posts_list': reversed(posts)}
     return render(request, template, context)
 
+
 def post_detail(request, id):
     template = 'blog/detail.html'
-    # Убедитесь, что id является целым числом и находится в диапазоне списка posts
     id = int(id)
     if 0 <= id < len(posts):
         context = {
@@ -59,6 +60,7 @@ def post_detail(request, id):
             'id': id,
         }
     return render(request, template, context)
+
 
 def category_posts(request, category_slug):
     template = 'blog/category.html'
